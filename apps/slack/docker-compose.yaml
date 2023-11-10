@@ -1,0 +1,20 @@
+version: '3.6'
+services:
+  postgres:
+    image: postgres:15.2
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 256M
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_DB: slack
+      POSTGRES_USER: slack
+      POSTGRES_PASSWORD: slack
+volumes:
+  db_data:
