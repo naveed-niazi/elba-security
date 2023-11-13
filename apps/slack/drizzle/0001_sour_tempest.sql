@@ -1,0 +1,1 @@
+ALTER TABLE "teams" ADD COLUMN "organisation_id" text NOT NULL;

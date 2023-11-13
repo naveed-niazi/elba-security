@@ -1,3 +1,4 @@
+import { relations } from 'drizzle-orm';
 import { teams } from './teams';
 import {
   integer,
@@ -33,12 +34,19 @@ export const usersSyncJobs = pgTable(
   },
   (usersSyncJobs) => {
     return {
-      nameIndex: uniqueIndex('team_id_idx').on(usersSyncJobs.teamId),
+      nameIndex: uniqueIndex('team_id_idx').on(usersSyncJobs.teamId), // TODO: better naming
     };
   }
 );
 
 export type NewUsersSyncJob = typeof usersSyncJobs.$inferInsert;
+
+export const usersSyncJobsRelations = relations(usersSyncJobs, ({ one }) => ({
+  team: one(teams, {
+    fields: [usersSyncJobs.teamId],
+    references: [teams.id],
+  }),
+}));
 
 // export const cities = pgTable('cities', {
 //   id: serial('id').primaryKey(),

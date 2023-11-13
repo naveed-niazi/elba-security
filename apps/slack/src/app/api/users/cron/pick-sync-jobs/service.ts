@@ -7,6 +7,7 @@ import { SlackAPIClient } from 'slack-web-api-client';
 
 export const pickUsersSyncJobs = async () => {
   const job = await db.query.usersSyncJobs.findFirst({
+    with: { team: { columns: { elbaOrganisationId: true } } },
     columns: {
       id: true,
       teamId: true,
@@ -44,18 +45,46 @@ export const pickUsersSyncJobs = async () => {
     // throw new Error('An error occurred');
   }
 
-  const users: { id: string; email: string; fullName?: string }[] = [];
+  const users: { id: string; email: string; displayName?: string; additionalEmails: [] }[] = [];
   for (const member of members) {
     if (!member.deleted && !member.is_bot && member.profile?.email && member.id) {
       users.push({
         id: member.id,
         email: member.profile.email,
-        fullName: member.real_name,
+        displayName: member.real_name,
+        additionalEmails: [],
       });
     }
   }
 
+  const updateResponse = await fetch(`${env.ELBA_API_BASE_URL}/api/rest/users`, {
+    method: 'POST',
+    body: JSON.stringify({
+      sourceId: env.ELBA_SOURCE_ID,
+      organisationId: job.team.elbaOrganisationId,
+      users,
+    }),
+  });
+
+  const updateResponseJson = await updateResponse.json();
+  console.log({ updateResponseJson });
+
   const nextPaginationToken = response_metadata?.next_cursor;
+  if (!nextPaginationToken) {
+    const deleteResponse = await fetch(`${env.ELBA_API_BASE_URL}/api/rest/users`, {
+      method: 'DELETE',
+      body: JSON.stringify({
+        sourceId: env.ELBA_SOURCE_ID,
+        organisationId: job.team.elbaOrganisationId,
+        lastSyncedBefore: job.syncStartedAt.toISOString(),
+      }),
+    });
+
+    const deleteResponseJson = await deleteResponse.json();
+
+    console.log({ deleteResponseJson, lastSyncedBefore: job.syncStartedAt.toISOString() });
+  }
+
   await db.transaction(async (tx) => {
     await tx.delete(usersSyncJobs).where(eq(usersSyncJobs.id, job.id));
 

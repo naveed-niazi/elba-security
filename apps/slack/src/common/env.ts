@@ -6,8 +6,8 @@ const zEnvInt = () => z.string().transform(Number).pipe(z.number().int());
 export const env = createEnv({
   server: {
     CRON_SECRET: z.string(),
-    // ELBA_API_BASE_URL: z.string().url(),
-    // ELBA_SOURCE_ID: z.string(),
+    ELBA_API_BASE_URL: z.string().url(),
+    ELBA_SOURCE_ID: z.string(),
     // POSTGRES_HOST: z.string(),
     // POSTGRES_PORT: zEnvInt(),
     // POSTGRES_USER: z.string(),
