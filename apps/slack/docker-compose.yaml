@@ -1,8 +1,12 @@
 version: '3.6'
 services:
   postgres:
-    image: postgres:15.2
+    image: postgres:15.2-alpine
     restart: always
+    environment:
+      POSTGRES_USER: slack
+      POSTGRES_PASSWORD: slack
+      POSTGRES_DB: slack
     deploy:
       resources:
         limits:
@@ -11,10 +15,16 @@ services:
     volumes:
       - db_data:/var/lib/postgresql/data
     ports:
-      - '5432:5432'
+      - '55432:5432'
+  pg_proxy:
+    image: ghcr.io/neondatabase/wsproxy:latest
     environment:
-      POSTGRES_DB: slack
-      POSTGRES_USER: slack
-      POSTGRES_PASSWORD: slack
+      APPEND_PORT: postgres:5432
+      ALLOW_ADDR_REGEX: '.*'
+      LOG_TRAFFIC: 'true'
+    ports:
+      - '5433:80'
+    depends_on:
+      - postgres
 volumes:
   db_data:
