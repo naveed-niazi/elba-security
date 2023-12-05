@@ -6,8 +6,8 @@ export const mockInngestFunction = (func: ReturnType<typeof inngest.createFuncti
     run: vi
       .fn()
       .mockImplementation((name: string, stepHandler: () => Promise<unknown>) => stepHandler()),
-    sendEvent: vi.fn().mockResolvedValue(undefined),
-    waitForEvent: vi.fn().mockResolvedValue(undefined),
+    sendEvent: vi.fn().mockResolvedValue({}),
+    waitForEvent: vi.fn().mockResolvedValue({}),
   };
 
   const context = {

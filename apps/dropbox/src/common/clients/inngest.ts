@@ -24,6 +24,13 @@ const eventMap = {
       organisationId: z.string(),
     }),
   },
+  'third-party-apps/run-sync-jobs': {
+    data: z.object({
+      organisationId: z.string(),
+      accessToken: z.string(),
+      isFirstScan: z.boolean().default(false),
+    }),
+  },
 };
 
 // Create a client to send and receive events

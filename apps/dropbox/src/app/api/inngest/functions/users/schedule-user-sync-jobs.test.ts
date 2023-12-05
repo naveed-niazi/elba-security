@@ -21,6 +21,7 @@ describe('schedule-users-sync-jobs', () => {
     await expect(result).resolves.toStrictEqual({
       organisations: expect.arrayContaining(scheduledOrganisations),
     });
+
     expect(step.sendEvent).toBeCalledTimes(1);
     expect(step.sendEvent).toBeCalledWith(
       'run-users-sync-scan',

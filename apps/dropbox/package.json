@@ -14,7 +14,7 @@
     "migration:generate": "drizzle-kit generate:pg --schema=./src/database/schema.ts",
     "migration:push": "npx tsx ./src/database/migrate.ts .env.local && npx tsx ./src/database/migrate.ts .env.test.local",
     "migrate": "pnpm migration:generate && pnpm migration:push",
-    "inngest": "npx inngest-cli@latest dev -u http://localhost:3300/api/inngest"
+    "inngest": "npx inngest-cli@latest dev -u http://localhost:3300/api/inngest && open http://localhost:8288"
   },
   "dependencies": {
     "@elba-security/schemas": "workspace:*",
@@ -47,7 +47,6 @@
     "eslint-config-custom": "workspace:*",
     "msw": "^2.0.1",
     "node-mocks-http": "^1.13.0",
-    "ts-node": "^10.9.1",
     "tsconfig": "workspace:*",
     "tsx": "^3.12.2",
     "typescript": "^5.2.2",
