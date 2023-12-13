@@ -1,5 +1,4 @@
 import Header from '../Header/header';
-import Footer from '../Footer/footer';
 import React, { ReactNode } from 'react';
 import { useSession } from 'next-auth/react';
 
@@ -17,7 +16,6 @@ export default function Layout({ children }: LayoutProps) {
     <>
       <Header />
       <main>{children}</main>
-      {/* <Footer /> */}
     </>
   );
 }
