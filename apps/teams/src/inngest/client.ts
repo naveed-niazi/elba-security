@@ -1,6 +1,6 @@
 import { EventSchemas, Inngest } from 'inngest';
 import { z } from 'zod';
-import { rateLimitMiddleware } from './middlewares/rate-limit-middleware';
+import { rateLimitMiddleware } from './middlewares/rate-limit-middlewares';
 import { unauthorizedMiddleware } from './middlewares/unauthorized-middleware';
 
 export type FunctionHandler = Parameters<typeof inngest.createFunction>[2];
