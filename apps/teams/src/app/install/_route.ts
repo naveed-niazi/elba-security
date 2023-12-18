@@ -14,5 +14,5 @@ export function GET(request: NextRequest) {
 
   cookies().set('organisation_id', organisationId);
   // redirect(env.GITHUB_APP_INSTALL_URL);
-  //   redirect(env.)
+//   redirect(env.)
 }
