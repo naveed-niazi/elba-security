@@ -50,7 +50,3 @@
 //     throw error;
 //   }
 // }
-
-import {} from '@azure/msal-node'
-
-var authorityURI = "https://login.microsoftonline.com/common";
