@@ -3,7 +3,7 @@ import * as installationRepository from '@/connectors/installation';
 import * as client from '@/inngest/client';
 import { db } from '@/database/client';
 import { Organisation } from '@/database/schema';
-import { setupOrganisation } from './service';
+import { setupOrganisation } from './_service';
 
 const installationId = 1;
 const organisationId = `45a76301-f1dd-4a77-b12f-9d7d3fca3c90`;
