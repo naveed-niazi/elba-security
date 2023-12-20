@@ -1,7 +1,7 @@
 import { EventSchemas, Inngest } from 'inngest';
 import { z } from 'zod';
-import { rateLimitMiddleware } from './middlewares/rate-limit-middleware';
-import { unauthorizedMiddleware } from './middlewares/unauthorized-middleware';
+// import { rateLimitMiddleware } from './middlewares/rate-limit-middleware';
+// import { unauthorizedMiddleware } from './middlewares/unauthorized-middleware';
 
 export type FunctionHandler = Parameters<typeof inngest.createFunction>[2];
 
@@ -9,7 +9,7 @@ export type FunctionHandler = Parameters<typeof inngest.createFunction>[2];
 // refresh_token: refresh_token,
 
 export const inngest = new Inngest({
-  id: 'github',
+  id: 'teams',
   schemas: new EventSchemas().fromZod({
     'users/page_sync.requested': {
       data: z.object({

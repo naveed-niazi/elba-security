@@ -39,8 +39,11 @@ export async function GET(request: NextRequest) {
 
     console.log("setting up origanization");
     await setupOrganisation(organisationId, access_token, refresh_token);
+
+    console.log("redirecting to elba_redirect_url");
     redirect(env.ELBA_REDIRECT_URL, RedirectType.replace);
   } catch (error) {
+    console.log("error ==== ", error);
     // return NextResponse.json('Internal Server Error');
     if (isRedirectError(error)) {
       throw error;

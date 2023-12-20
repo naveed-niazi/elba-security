@@ -42,7 +42,11 @@ import { Organisation } from '@/database/schema';
 //   return organisation;
 // };
 
-export const setupOrganisation = async (organisationId: string, access_token: string, refresh_token: string) => {
+export const setupOrganisation = async (
+  organisationId: string,
+  access_token: string,
+  refresh_token: string
+) => {
   const [organisation] = await db
     .insert(Organisation)
     .values({
@@ -51,6 +55,8 @@ export const setupOrganisation = async (organisationId: string, access_token: st
       refresh_token: refresh_token,
     })
     .returning();
+
+  console.log('organisation === ', organisation);
 
   if (!organisation) {
     throw new Error(`Could not setup organisation with id=${organisationId}`);

@@ -46,7 +46,7 @@ export const env = z
     // GITHUB_PRIVATE_KEY: z.string(),
     // GITHUB_CLIENT_ID: z.string(),
     // GITHUB_CLIENT_SECRET: z.string(),
-    // POSTGRES_URL: z.string(),
+    POSTGRES_URL: z.string(),
     // MAX_CONCURRENT_USERS_SYNC: z.coerce.number().int().positive(),
     // MAX_CONCURRENT_THIRD_PARTY_APPS_SYNC: z.coerce.number().int().positive(),
     // USERS_SYNC_CRON: z.string(),
@@ -56,6 +56,6 @@ export const env = z
     // THIRD_PARTY_APPS_SYNC_BATCH_SIZE: z.coerce.number().int().positive(),
     // THIRD_PARTY_APPS_MAX_RETRY: zEnvRetry(),
     // VERCEL_PREFERRED_REGION: z.string().min(1),
-    // VERCEL_ENV: z.string().optional(),
+    VERCEL_ENV: z.string().optional(),
   })
   .parse(process.env);
