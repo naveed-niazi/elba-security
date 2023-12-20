@@ -1,31 +1,52 @@
 import { RedirectType, redirect } from 'next/navigation';
 import { isRedirectError } from 'next/dist/client/components/redirect';
-import type { NextRequest } from 'next/server';
+import { NextResponse, type NextRequest } from 'next/server';
 import { env } from '@/env';
 import { setupOrganisation } from './_service';
+import axios from 'axios';
 
 export const dynamic = 'force-dynamic';
 
 export async function GET(request: NextRequest) {
-  const msalAuthCode = request.nextUrl.searchParams.get('code');
-  console.log('msalAuthCode === ', msalAuthCode);
+  try {
+    const basicCode = request.nextUrl.searchParams.get('code');
+    // const organisationId = env.ELBA_ORGANIZATION_ID
+    const organisationId = request.cookies.get('organisation_id')?.value as string;
 
-  const tokenEndpoint = `https://login.microsoftonline.com/2d8b8525-019f-4b55-9110-6c058df772eb/oauth2/v2.0/token`;
-  const clientId = env.AZURE_AD_CLIENT_ID;
-  const clientSecret = env.AZURE_AD_CLIENT_SECRET;
-  const requestBody = `grant_type=authorization_code&code=${msalAuthCode}&redirect_uri=http://localhost:3000/setup&client_id=${clientId}&client_secret=${clientSecret}`;
+    console.log("organisationId ==== ", organisationId);
 
-  const response = await fetch(tokenEndpoint, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    body: requestBody,
-  });
+    const URL = `https://login.microsoftonline.com/common/oauth2/v2.0/token`;
 
-  const responseBody = await response.json();
+    const requestBody = {
+      grant_type: 'authorization_code',
+      client_id: env.AZURE_AD_CLIENT_ID,
+      client_secret: env.AZURE_AD_CLIENT_SECRET,
+      code: basicCode,
+      redirect_uri: env.AZURE_AUTH_REDIRECT_URL,
+    };
 
-  console.log("responseBody ==== ", responseBody);
+    const result = await axios.post(URL, requestBody, {
+      headers: { 'content-type': 'application/x-www-form-urlencoded' },
+    });
+    console.log("result here ==== ", result.data);
+    // return NextResponse.json(result.data);
+
+    const { access_token, refresh_token } = result.data;
+    if (!access_token || !refresh_token) {
+      console.log("getting error | either access_token or refresh_token is missing");
+      redirect(`${env.ELBA_REDIRECT_URL}?error=true`, RedirectType.replace);
+    }
+
+    console.log("setting up origanization");
+    await setupOrganisation(organisationId, access_token, refresh_token);
+    redirect(env.ELBA_REDIRECT_URL, RedirectType.replace);
+  } catch (error) {
+    // return NextResponse.json('Internal Server Error');
+    if (isRedirectError(error)) {
+      throw error;
+    }
+    redirect(`${env.ELBA_REDIRECT_URL}?error=true`, RedirectType.replace);
+  }
 
   // const rawInstallationId = request.nextUrl.searchParams.get('installation_id');
   // const organisationId = request.cookies.get('organisation_id')?.value;

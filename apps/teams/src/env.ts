@@ -39,6 +39,7 @@ export const env = z
     AZURE_AUTH_REDIRECT_URL: z.string(),
     AZURE_AD_CLIENT_ID: z.string(),
     AZURE_AD_CLIENT_SECRET: z.string(),
+    AZURE_AD_TENANT_ID: z.string(),
 
     // GITHUB_APP_INSTALL_URL: z.string().url(),
     // GITHUB_APP_ID: z.string(),

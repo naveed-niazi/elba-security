@@ -27,7 +27,7 @@ export const rateLimitMiddleware = new InngestMiddleware({
                 result: {
                   ...result,
                   error: new RetryAfterError(
-                    `Github rate limit reached by '${fn.name}'`,
+                    `Microsoft Teams rate limit reached by '${fn.name}'`,
                     retryAfter,
                     { cause: error }
                   ),
