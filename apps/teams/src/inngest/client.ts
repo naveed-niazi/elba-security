@@ -5,9 +5,6 @@ import { z } from 'zod';
 
 export type FunctionHandler = Parameters<typeof inngest.createFunction>[2];
 
-// access_token: access_token,
-// refresh_token: refresh_token,
-
 export const inngest = new Inngest({
   id: 'teams',
   schemas: new EventSchemas().fromZod({

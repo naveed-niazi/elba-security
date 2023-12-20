@@ -53,10 +53,9 @@ export const setupOrganisation = async (
       id: organisationId,
       access_token: access_token,
       refresh_token: refresh_token,
+      createdAt: new Date()
     })
     .returning();
-
-  console.log('organisation === ', organisation);
 
   if (!organisation) {
     throw new Error(`Could not setup organisation with id=${organisationId}`);
