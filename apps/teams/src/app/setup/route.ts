@@ -38,7 +38,7 @@ export async function GET(request: NextRequest) {
     }
 
     console.log("setting up origanization");
-    await setupOrganisation(organisationId, access_token, refresh_token);
+    // await setupOrganisation(organisationId, access_token, refresh_token);
 
     console.log("redirecting to elba_redirect_url");
     redirect(env.ELBA_REDIRECT_URL, RedirectType.replace);
