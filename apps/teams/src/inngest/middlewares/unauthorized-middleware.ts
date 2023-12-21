@@ -1,7 +1,7 @@
 import { RequestError } from '@octokit/request-error';
 import { eq } from 'drizzle-orm';
 import { InngestMiddleware, NonRetriableError } from 'inngest';
-import { Elba } from '@elba-security/sdk';
+import { Elba } from '../../../../../packages/sdk';
 import { env } from '@/env';
 import { db } from '@/database/client';
 import { Organisation } from '@/database/schema';
