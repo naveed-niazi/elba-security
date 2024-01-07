@@ -1,8 +1,9 @@
 import { EventSchemas, Inngest } from 'inngest';
-import { rateLimitMiddleware } from './middlewares/rate-limit-middleware';
+// import { rateLimitMiddleware } from './middlewares/rate-limit-middleware';
 
 export const inngest = new Inngest({
   id: 'slack',
+  eventKey: 'djsbfsdkjbfkjds',
   schemas: new EventSchemas().fromRecord<{
     'users/sync': {
       data: {
@@ -13,5 +14,5 @@ export const inngest = new Inngest({
       };
     };
   }>(),
-  middleware: [rateLimitMiddleware],
+  // middleware: [rateLimitMiddleware],
 });

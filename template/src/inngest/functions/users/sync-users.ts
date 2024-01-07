@@ -1,5 +1,5 @@
-import type { User } from '@elba-security/sdk';
-import { Elba } from '@elba-security/sdk';
+import type { User } from '../../../../../packages/sdk';
+import { Elba } from '../../../../../packages/sdk';
 import { eq } from 'drizzle-orm';
 import { NonRetriableError } from 'inngest';
 import { type MySaasUser, getUsers } from '@/connectors/users';

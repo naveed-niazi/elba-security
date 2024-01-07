@@ -41,6 +41,8 @@ export const env = z
     AZURE_AD_CLIENT_SECRET: z.string(),
     AZURE_AD_TENANT_ID: z.string(),
 
+    INNGEST_EVENT_KEY: z.string(),
+
     // GITHUB_APP_INSTALL_URL: z.string().url(),
     // GITHUB_APP_ID: z.string(),
     // GITHUB_PRIVATE_KEY: z.string(),

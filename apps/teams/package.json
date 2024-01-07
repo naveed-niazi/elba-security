@@ -13,7 +13,7 @@
     "@octokit/app": "^14.0.2",
     "axios": "^1.6.2",
     "drizzle-orm": "^0.29.1",
-    "inngest": "^3.7.3",
+    "inngest": "^3.7.4",
     "next": "14.0.4",
     "postgres": "^3.4.3",
     "react": "^18",
