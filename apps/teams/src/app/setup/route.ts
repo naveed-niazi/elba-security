@@ -1,6 +1,6 @@
 import { RedirectType, redirect } from 'next/navigation';
 import { isRedirectError } from 'next/dist/client/components/redirect';
-import { NextResponse, type NextRequest } from 'next/server';
+import type { NextRequest } from 'next/server';
 import { env } from '@/env';
 import { setupOrganisation } from './service';
 import axios from 'axios';
