@@ -39,14 +39,10 @@ export async function GET(request: NextRequest) {
       `${env.ELBA_REDIRECT_URL}?source=${env.ELBA_SOURCE_ID}&success=true`,
       RedirectType.replace
     );
-  } catch (error) {
+  } catch (error: any) {
     console.log('Error: ', error);
-    if (isRedirectError(error)) {
-      throw error;
-    }
-
     redirect(
-      `${env.ELBA_REDIRECT_URL}?source=${env.ELBA_SOURCE_ID}&error=500`,
+      `${env.ELBA_REDIRECT_URL}?source=${env.ELBA_SOURCE_ID}&error=${error?.response?.status ?? 500}`,
       RedirectType.replace
     );
   }
