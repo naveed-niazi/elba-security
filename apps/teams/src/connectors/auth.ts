@@ -1,25 +1,24 @@
-/**
- * DISCLAIMER:
- * This is an example connector, the function has a poor implementation.
- * When requesting against API endpoint we might prefer to valid the response
- * data received using zod than unsafely assign types to it.
- * This might not fit your usecase if you are using a SDK to connect to the Saas.
- * These file illustrate potential scenarios and methodologies relevant for SaaS integration.
- */
+import { env } from '@/env';
 
-import { MySaasError } from './commons/error';
+type TokenResponseData = { access_token: string; refresh_token: string };
+type TokenData = { accessToken: string; refreshToken: string };
 
-type GetTokenResponseData = { token: string };
-
-export const getToken = async (code: string) => {
-  const response = await fetch('https://mysaas.com/api/v1/token', {
-    method: 'POST',
-    body: JSON.stringify({ code }),
+export const getTokens = async (code: string): Promise<TokenData> => {
+  const requestBody = new URLSearchParams({
+    code,
+    grant_type: 'authorization_code',
+    client_id: env.AZURE_AD_CLIENT_ID,
+    client_secret: env.AZURE_AD_CLIENT_SECRET,
+    redirect_uri: env.AZURE_AUTH_REDIRECT_URL,
   });
 
-  if (!response.ok) {
-    throw new MySaasError('Could not retrieve token', { response });
-  }
-  const data = (await response.json()) as GetTokenResponseData;
-  return data.token;
+  const response = await fetch(env.AZURE_TOKENS_URL, {
+    method: 'POST',
+    headers: { 'content-type': 'application/x-www-form-urlencoded' },
+    body: requestBody.toString(),
+  });
+
+  const result = (await response.json()) as TokenResponseData;
+
+  return { accessToken: result.access_token, refreshToken: result.refresh_token };
 };

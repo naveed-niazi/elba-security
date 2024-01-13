@@ -16,6 +16,7 @@ export const env = z
     POSTGRES_PROXY_PORT: z.coerce.number().int().positive(),
     VERCEL_PREFERRED_REGION: z.string().min(1),
     VERCEL_ENV: z.string().min(1).optional(),
+    AZURE_TOKENS_URL: z.string(),
     AZURE_AUTH_URL: z.string(),
     AZURE_AUTH_REDIRECT_URL: z.string(),
     AZURE_AD_CLIENT_ID: z.string(),
